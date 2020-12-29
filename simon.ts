@@ -1,5 +1,5 @@
-let TIME: number = 100;
-let DEBOUNCE: number = 100;
+let TIME: number = 150;
+let DEBOUNCE: number = 151;
 function red() {
     light.setPixelColor(0, light.rgb(255, 0, 0))
     light.setPixelColor(1, light.rgb(255, 0, 0))
@@ -35,23 +35,33 @@ function yellow() {
 
 let functions = [red, blue, green, yellow]
 function getRandomMove() {
-    return Math.floor(Math.random() * functions.length)//insufficiently random, as in 100% the same every time
+    return (control.timer1.millis() + control.timer1.millis() % control.timer1.seconds()) % 4 //DEBOUNCE is messing with this
 }
-
 let moves: number[] = []
-
-forever(function () {
-    if (input.buttonsAB.isPressed()) {
-        moves = []
-    } else
-        if (input.buttonA.isPressed()) {
-            moves.push(getRandomMove())
-        } else
-            if (input.buttonB.isPressed()) {
-                moves.forEach(function (func) {
-                    functions[func]()
-                    loops.pause(TIME)
-                })
-            }
-    loops.pause(DEBOUNCE)
+input.buttonsAB.onEvent(ButtonEvent.Click, function () {
+    moves = []
 })
+input.buttonA.onEvent(ButtonEvent.Click, function () {
+    moves.push(getRandomMove())
+})
+input.buttonB.onEvent(ButtonEvent.Click, function () {
+    moves.forEach(function (func) {
+        functions[func]()
+        loops.pause(TIME)
+    })
+})
+// forever(function () {
+//     if (input.buttonsAB.isPressed()) {
+//         moves = []
+//     } else
+//         if (input.buttonA.isPressed()) {
+//             moves.push(getRandomMove())
+//         } else
+//             if (input.buttonB.isPressed()) {
+//                 moves.forEach(function (func) {
+//                     functions[func]()
+//                     loops.pause(TIME)
+//                 })
+//             }
+//     loops.pause(DEBOUNCE)
+// })
