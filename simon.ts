@@ -46,31 +46,40 @@ function getRandomMove() {
 
 }
 let moves: number[] = []
+
 //testing touch sensitive input
 input.touchA1.onEvent(ButtonEvent.Click, function () {
     green()
+    //addToBuff(3)
 })
 input.touchA2.onEvent(ButtonEvent.Click, function () {
     yellow()
+    //addToBuff(2)
 })
 input.touchA6.onEvent(ButtonEvent.Click, function () {
     blue()
+    //addToBuff(1)
 })
 input.touchA5.onEvent(ButtonEvent.Click, function () {
     red()
+    //addToBuff(0)
 })
+
 //testing sequencing
-input.buttonsAB.onEvent(ButtonEvent.Click, function () {
+input.buttonsAB.onEvent(ButtonEvent.Click, function () {// L&R: reset
     moves = []
 })
-input.buttonA.onEvent(ButtonEvent.Click, function () {
+input.buttonA.onEvent(ButtonEvent.Click, function () {//L: add
     moves.push(getRandomMove())
+    //evalBuff
 })
-input.buttonB.onEvent(ButtonEvent.Click, function () {
+input.buttonB.onEvent(ButtonEvent.Click, function () {//r: playbackj
     moves.forEach(function (func) {
         functions[func]()
         loops.pause(TIME)
     })
+    //clearBuff
 })
 
 
+//music.baDing.play()
