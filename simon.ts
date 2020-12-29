@@ -65,6 +65,7 @@ function showLeft(leftNum: number) {
         case 2: light.setPixelColor(2, light.rgb(0, 128, 0));
         case 1: light.setPixelColor(1, light.rgb(0, 128, 0));
         case 0: light.setPixelColor(0, light.rgb(0, 128, 0));
+            break
         default: light.setPixelColor(4, light.rgb(128, 0, 0))
     }
 }
@@ -75,6 +76,7 @@ function showRight(rightNum: number) {
         case 2: light.setPixelColor(7, light.rgb(0, 0, 128));
         case 1: light.setPixelColor(8, light.rgb(0, 0, 128));
         case 0: light.setPixelColor(9, light.rgb(0, 0, 128));
+            break
         default: light.setPixelColor(5, light.rgb(128, 0, 0))
     }
 }
@@ -87,8 +89,9 @@ function evalBuff() {
             lose()
             return;
         }
-        loops.pause(100)
+        basic.pause(TIME * 2)
         light.clear()
+        basic.pause(100)
     }
     win()
 }
@@ -96,11 +99,11 @@ function evalBuff() {
 //testing touch sensitive input
 input.touchA1.onEvent(ButtonEvent.Click, function () {
     green()
-    addToBuff(3)
+    addToBuff(2)
 })
 input.touchA2.onEvent(ButtonEvent.Click, function () {
     yellow()
-    addToBuff(2)
+    addToBuff(3)
 })
 input.touchA6.onEvent(ButtonEvent.Click, function () {
     blue()
@@ -116,13 +119,13 @@ input.buttonsAB.onEvent(ButtonEvent.Click, function () {// L&R: reset
     moves = []
 })
 input.buttonA.onEvent(ButtonEvent.Click, function () {//L: add
-    moves.push(getRandomMove())
     evalBuff()
+    moves.push(getRandomMove())
 })
 input.buttonB.onEvent(ButtonEvent.Click, function () {//r: playbackj
     moves.forEach(function (func) {
         colorFunctions[func]()
-        loops.pause(TIME)
+        basic.pause(TIME)
     })
     clearBuff()
 })
