@@ -59,14 +59,36 @@ function lose() {
 function win() {
     music.playSound(music.sounds(Sounds.BaDing))
 }
+function showLeft(leftNum: number) {
+    switch (leftNum) {
+        case 3: light.setPixelColor(3, light.rgb(0, 128, 0));
+        case 2: light.setPixelColor(2, light.rgb(0, 128, 0));
+        case 1: light.setPixelColor(1, light.rgb(0, 128, 0));
+        case 0: light.setPixelColor(0, light.rgb(0, 128, 0));
+        default: light.setPixelColor(4, light.rgb(128, 0, 0))
+    }
+}
+
+function showRight(rightNum: number) {
+    switch (rightNum) {
+        case 3: light.setPixelColor(6, light.rgb(0, 0, 128));
+        case 2: light.setPixelColor(7, light.rgb(0, 0, 128));
+        case 1: light.setPixelColor(8, light.rgb(0, 0, 128));
+        case 0: light.setPixelColor(9, light.rgb(0, 0, 128));
+        default: light.setPixelColor(5, light.rgb(128, 0, 0))
+    }
+}
 function evalBuff() {
     for (let index = 0; index < moves.length; index++) {
-
+        showLeft(buff[index])
+        showRight(moves[index])
         //we need a custom logger to compare here
         if (buff[index] != moves[index]) {
             lose()
             return;
         }
+        loops.pause(100)
+        light.clear()
     }
     win()
 }
@@ -95,7 +117,7 @@ input.buttonsAB.onEvent(ButtonEvent.Click, function () {// L&R: reset
 })
 input.buttonA.onEvent(ButtonEvent.Click, function () {//L: add
     moves.push(getRandomMove())
-    //evalBuff()
+    evalBuff()
 })
 input.buttonB.onEvent(ButtonEvent.Click, function () {//r: playbackj
     moves.forEach(function (func) {
