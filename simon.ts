@@ -1,14 +1,17 @@
 let TIME: number = 150;
 let DEBOUNCE: number = 151;
 function red() {
+    music.playTone(310 * 2, TIME)
     light.setPixelColor(0, light.rgb(255, 0, 0))
     light.setPixelColor(1, light.rgb(255, 0, 0))
     light.setPixelColor(2, light.rgb(255, 0, 0))
     loops.pause(TIME)
     light.clear()
+
 }
 
 function blue() {
+    music.playTone(209 * 2, TIME)
     light.setPixelColor(2, light.rgb(0, 0, 255))
     light.setPixelColor(3, light.rgb(0, 0, 255))
     light.setPixelColor(4, light.rgb(0, 0, 255))
@@ -17,6 +20,7 @@ function blue() {
 }
 
 function green() {
+    music.playTone(415 * 2, TIME)
     light.setPixelColor(5, light.rgb(0, 255, 0))
     light.setPixelColor(6, light.rgb(0, 255, 0))
     light.setPixelColor(7, light.rgb(0, 255, 0))
@@ -25,6 +29,7 @@ function green() {
 }
 
 function yellow() {
+    music.playTone(252 * 2, TIME)
     light.setPixelColor(7, light.rgb(255, 255, 0))
     light.setPixelColor(8, light.rgb(255, 255, 0))
     light.setPixelColor(9, light.rgb(255, 255, 0))
@@ -34,8 +39,10 @@ function yellow() {
 
 
 let functions = [red, blue, green, yellow]
+
 function getRandomMove() {
-    return (control.timer1.millis() + control.timer1.millis() % control.timer1.seconds()) % 4 //DEBOUNCE is messing with this
+    return (Math.randomRange(0, 3) + Math.floor(input.temperature(TemperatureUnit.Celsius)) + control.timer1.millis() + input.soundLevel()) % 4//lets add some randomness from the environment, since we have temperature, etc
+
 }
 let moves: number[] = []
 input.buttonsAB.onEvent(ButtonEvent.Click, function () {
@@ -50,18 +57,5 @@ input.buttonB.onEvent(ButtonEvent.Click, function () {
         loops.pause(TIME)
     })
 })
-// forever(function () {
-//     if (input.buttonsAB.isPressed()) {
-//         moves = []
-//     } else
-//         if (input.buttonA.isPressed()) {
-//             moves.push(getRandomMove())
-//         } else
-//             if (input.buttonB.isPressed()) {
-//                 moves.forEach(function (func) {
-//                     functions[func]()
-//                     loops.pause(TIME)
-//                 })
-//             }
-//     loops.pause(DEBOUNCE)
-// })
+
+
