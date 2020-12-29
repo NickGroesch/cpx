@@ -38,6 +38,7 @@ function yellow() {
 }
 
 
+
 let functions = [red, blue, green, yellow]
 
 function getRandomMove() {
@@ -45,6 +46,20 @@ function getRandomMove() {
 
 }
 let moves: number[] = []
+//testing touch sensitive input
+input.touchA1.onEvent(ButtonEvent.Click, function () {
+    green()
+})
+input.touchA2.onEvent(ButtonEvent.Click, function () {
+    yellow()
+})
+input.touchA6.onEvent(ButtonEvent.Click, function () {
+    blue()
+})
+input.touchA5.onEvent(ButtonEvent.Click, function () {
+    red()
+})
+//testing sequencing
 input.buttonsAB.onEvent(ButtonEvent.Click, function () {
     moves = []
 })
